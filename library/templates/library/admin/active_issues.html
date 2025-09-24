@@ -1,0 +1,33 @@
+{% extends "library/base.html" %}
+{% block title %}Active Issues{% endblock %}
+{% block content %}
+<h2>Active Issues</h2>
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>User</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tx in txs %}
+      <tr>
+        <td>{{ tx.book.title }}</td>
+        <td>{{ tx.user.username }}</td>
+        <td>{{ tx.issue_date }}</td>
+        <td>{{ tx.due_date }}</td>
+        <td>{{ tx.status }}</td>
+        <td>
+          <a class="btn btn-sm btn-warning" href="{% url 'return_book' tx.id %}">Return</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No active issues.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

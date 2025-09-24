@@ -1,0 +1,22 @@
+{% extends "library/base.html" %}
+{% block title %}Issue Book{% endblock %}
+{% block content %}
+<h2>Issue Book</h2>
+<form method="post" class="mb-3">
+  {% csrf_token %}
+  <div class="mb-2">
+    {{ form.book.label_tag }}<br>
+    {{ form.book }}
+  </div>
+
+  {% if user.is_staff %}
+    <div class="mb-2">
+      {{ form.user.label_tag }} (optional for staff)<br>
+      {{ form.user }}
+    </div>
+  {% endif %}
+
+  <button class="btn btn-primary">Issue</button>
+  <a class="btn btn-outline-secondary" href="{% url 'book_availability' %}">Cancel</a>
+</form>
+{% endblock %}

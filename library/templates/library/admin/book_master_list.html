@@ -1,0 +1,33 @@
+{% extends "library/base.html" %}
+{% block title %}Master List of Books{% endblock %}
+{% block content %}
+<h2>Master List of Books</h2>
+<table class="table table-sm table-striped">
+  <thead>
+    <tr>
+      <th>Code No</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Category</th>
+      <th>Total Copies</th>
+      <th>Available Copies</th>
+      <th>Added On</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+      <tr>
+        <td>{{ book.code_no }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.category }}</td>
+        <td>{{ book.total_copies }}</td>
+        <td>{{ book.available_copies }}</td>
+        <td>{{ book.added_on }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7">No books found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

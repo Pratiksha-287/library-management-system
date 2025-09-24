@@ -1,0 +1,31 @@
+{% extends "library/base.html" %}
+{% block title %}Memberships{% endblock %}
+{% block content %}
+<h2>Memberships</h2>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Phone</th>
+      <th>Adhaar</th>
+      <th>Membership Type</th>
+      <th>Start</th>
+      <th>End</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for m in members %}
+      <tr>
+        <td>{{ m.user.username }}</td>
+        <td>{{ m.phone }}</td>
+        <td>{{ m.adhaar }}</td>
+        <td>{{ m.get_membership_type_display }}</td>
+        <td>{{ m.membership_start }}</td>
+        <td>{{ m.membership_end }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No members found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "library/base.html" %}
+{% block title %}Return Book List{% endblock %}
+
+{% block content %}
+<h2>Return Book List</h2>
+
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>User</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tx in txs %}
+    <tr>
+      <td>{{ tx.book.title }}</td>
+      <td>{{ tx.user.username }}</td>
+      <td>{{ tx.issue_date }}</td>
+      <td>{{ tx.due_date }}</td>
+      <td>{{ tx.status }}</td>
+      <td>
+        {% if tx.status == 'issued' %}
+          <a class="btn btn-sm btn-warning" href="{% url 'return_book' tx.id %}">Return</a>
+        {% else %}
+          <span class="text-muted">Returned</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% empty %}
+      <tr><td colspan="6">No books to return.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

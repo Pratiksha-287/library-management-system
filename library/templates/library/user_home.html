@@ -1,0 +1,52 @@
+{% extends "library/base.html" %}
+{% block title %}My Account{% endblock %}
+{% block content %}
+
+<h2>My Transactions</h2>
+<table class="table table-sm">
+  <thead><tr><th>Book</th><th>Issue date</th><th>Due date</th><th>Return</th><th>Fine</th><th>Action</th></tr></thead>
+  <tbody>
+    {% for t in my_issued %}
+      <tr>
+        <td>{{ t.book.title }}</td>
+        <td>{{ t.issue_date }}</td>
+        <td>{{ t.due_date }}</td>
+        <td>{% if t.return_date %}{{ t.return_date }}{% else %}-{% endif %}</td>
+        <td>{% if t.fine %}₹{{ t.fine }}{% else %}-{% endif %}</td>
+        <td>
+          {% if t.status == 'issued' %}
+            <a class="btn btn-sm btn-danger" href="{% url 'return_book' t.id %}">Return</a>
+          {% elif t.fine and not t.fine_paid %}
+            <a class="btn btn-sm btn-primary" href="{% url 'pay_fine' t.id %}">Pay Fine</a>
+          {% else %}
+            <span class="text-muted">—</span>
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">You have no transactions.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Reports & Transactions Links -->
+<div class="row mt-4">
+  <div class="col-md-6 mb-3">
+    <h4>Reports</h4>
+    <ul class="list-group">
+      <li class="list-group-item"><a href="{% url 'my_active_issues' %}">My Active Issues</a></li>
+      <li class="list-group-item"><a href="{% url 'my_overdue' %}">My Overdue Returns</a></li>
+    </ul>
+  </div>
+
+  <div class="col-md-6 mb-3">
+    <h4>Transactions</h4>
+    <ul class="list-group">
+      <li class="list-group-item"><a href="{% url 'book_availability' %}">Check Book Availability / Search</a></li>
+      <li class="list-group-item"><a href="{% url 'issue_book' %}">Issue Book</a></li>
+      <li class="list-group-item"><a href="{% url 'return_book_list' %}">Return Book</a></li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

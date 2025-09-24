@@ -1,0 +1,31 @@
+{% extends "library/base.html" %}
+{% block title %}Books{% endblock %}
+{% block content %}
+<h2>Books</h2>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Category</th>
+      <th>Total Copies</th>
+      <th>Available Copies</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for b in books %}
+      <tr>
+        <td>{{ b.code_no }}</td>
+        <td>{{ b.title }}</td>
+        <td>{{ b.author }}</td>
+        <td>{{ b.category }}</td>
+        <td>{{ b.total_copies }}</td>
+        <td>{{ b.available_copies }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6">No books found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

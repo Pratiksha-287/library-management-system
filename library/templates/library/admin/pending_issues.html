@@ -1,0 +1,29 @@
+{% extends "library/base.html" %}
+{% block title %}Pending Issues{% endblock %}
+{% block content %}
+<h2>Pending Issue Requests</h2>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Book</th>
+      <th>User</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for t in txs %}
+      <tr>
+        <td>{{ t.book.title }}</td>
+        <td>{{ t.user.username }}</td>
+        <td>{{ t.issue_date }}</td>
+        <td>{{ t.due_date }}</td>
+        <td>{{ t.status }}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No pending issues.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
