@@ -12,11 +12,14 @@
   <nav class="mb-3 d-flex align-items-center">
     <!-- Left side buttons -->
     <div>
-      <a class="btn btn-sm btn-outline-primary me-1" href="{% url 'book_availability' %}">Books</a>
       {% if user.is_staff %}
+        <!-- Only Admin Home for staff -->
         <a class="btn btn-sm btn-outline-secondary me-1" href="{% url 'admin_home' %}">Admin Home</a>
+      {% else %}
+        <!-- Regular user nav -->
+        <a class="btn btn-sm btn-outline-primary me-1" href="{% url 'book_availability' %}">Books</a>
+        <a class="btn btn-sm btn-outline-success" href="{% url 'user_home' %}">My Account</a>
       {% endif %}
-      <a class="btn btn-sm btn-outline-success" href="{% url 'user_home' %}">My Account</a>
     </div>
 
     <!-- Right side login/logout -->

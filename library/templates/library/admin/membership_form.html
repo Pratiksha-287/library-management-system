@@ -1,0 +1,14 @@
+{% extends "library/base.html" %}
+{% block title %}Add / Edit Member{% endblock %}
+
+{% block content %}
+<h2>{{ form.instance.id|yesno:"Edit Member,Add Member" }}</h2>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <button type="submit" class="btn btn-success">Save</button>
+  <a href="{% url 'membership_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

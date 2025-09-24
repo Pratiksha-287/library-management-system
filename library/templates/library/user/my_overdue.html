@@ -1,0 +1,34 @@
+{% extends "library/base.html" %}
+{% block title %}My Overdue Returns{% endblock %}
+{% block content %}
+
+<h2>My Overdue Returns</h2>
+
+{% if txs %}
+<table class="table table-sm table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Book</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+      <th>Status</th>
+      <th>Fine</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tx in txs %}
+      <tr>
+        <td>{{ tx.book.title }}</td>
+        <td>{{ tx.issue_date }}</td>
+        <td>{{ tx.due_date }}</td>
+        <td>{{ tx.status|title }}</td>
+        <td>₹{{ tx.calculate_fine|floatformat:2 }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No overdue returns.</p>
+{% endif %}
+
+{% endblock %}

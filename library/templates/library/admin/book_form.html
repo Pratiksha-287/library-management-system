@@ -1,0 +1,11 @@
+{% extends "library/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+<h2>{{ title }}</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary" type="submit">Save</button>
+  <a class="btn btn-secondary" href="{% url 'book_list' %}">Cancel</a>
+</form>
+{% endblock %}

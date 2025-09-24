@@ -1,0 +1,32 @@
+{% extends "library/base.html" %}
+{% block title %}My Active Issues{% endblock %}
+{% block content %}
+
+<h2>My Active Issues</h2>
+
+{% if txs %}
+<table class="table table-sm table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Book</th>
+      <th>Issue Date</th>
+      <th>Due Date</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tx in txs %}
+      <tr>
+        <td>{{ tx.book.title }}</td>
+        <td>{{ tx.issue_date }}</td>
+        <td>{{ tx.due_date }}</td>
+        <td>{{ tx.status|title }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No active issues found.</p>
+{% endif %}
+
+{% endblock %}

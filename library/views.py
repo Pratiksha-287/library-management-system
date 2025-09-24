@@ -8,7 +8,7 @@ from decimal import Decimal
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.models import User
 from .models import Book, Transaction, Member
-from .forms import BookSearchForm, IssueForm, ReturnForm
+from .forms import BookSearchForm, IssueForm, ReturnForm,MemberForm, BookForm, UserForm 
 
 # configurable constants
 LOAN_DAYS = 14
@@ -220,6 +220,7 @@ def book_master_list(request):
 # -----------------------------
 # User Reports
 # -----------------------------
+
 @login_required
 def my_active_issues(request):
     txs = Transaction.objects.filter(user=request.user, status='issued')
@@ -241,3 +242,92 @@ def return_book_list(request):
     else:
         txs = Transaction.objects.filter(user=request.user, status='issued')
     return render(request, 'library/return_book_list.html', {'txs': txs})
+
+
+# -----------------------------
+# Admin Maintenance - Add/Edit
+# -----------------------------
+@staff_member_required
+def book_add(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Book added successfully.")
+            return redirect('book_list')
+    else:
+        form = BookForm()
+    return render(request, 'library/admin/book_form.html', {'form': form, 'title': 'Add Book'})
+
+@staff_member_required
+def book_edit(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Book updated successfully.")
+            return redirect('book_list')
+    else:
+        form = BookForm(instance=book)
+    return render(request, 'library/admin/book_form.html', {'form': form, 'title': 'Edit Book'})
+
+@staff_member_required
+def user_add(request):
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, "User added successfully.")
+            return redirect('user_list')
+    else:
+        form = UserForm()
+    return render(request, 'library/admin/user_form.html', {'form': form, 'title': 'Add User'})
+
+@staff_member_required
+def user_edit(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "User updated successfully.")
+            return redirect('user_list')
+    else:
+        form = UserForm(instance=user)
+    return render(request, 'library/admin/user_form.html', {'form': form, 'title': 'Edit User'})
+
+@staff_member_required
+def membership_add(request):
+    if request.method == 'POST':
+        form = MemberForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Member added successfully.")
+            return redirect('membership_list')
+    else:
+        form = MemberForm()
+    return render(request, 'library/admin/membership_form.html', {'form': form, 'title': 'Add Member'})
+
+@staff_member_required
+def membership_edit(request, member_id):
+    member = get_object_or_404(Member, id=member_id)
+    if request.method == 'POST':
+        form = MemberForm(request.POST, instance=member)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Member updated successfully.")
+            return redirect('membership_list')
+    else:
+        form = MemberForm(instance=member)
+    return render(request, 'library/admin/membership_form.html', {'form': form, 'title': 'Edit Member'})
+
+@staff_member_required
+def membership_delete(request, member_id):
+    member = get_object_or_404(Member, id=member_id)
+    member.delete()
+    messages.success(request, "Member deleted successfully.")
+    return redirect('membership_list')
+
+
+

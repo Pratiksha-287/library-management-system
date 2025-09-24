@@ -11,8 +11,19 @@ urlpatterns = [
     path('pay-fine/<int:tx_id>/', views.pay_fine, name='pay_fine'),
     # Admin Maintenance
     path('dashboard/members/', views.membership_list, name='membership_list'),
+    path('dashboard/members/add/', views.membership_add, name='membership_add'),
+    path('dashboard/members/<int:member_id>/edit/', views.membership_edit, name='membership_edit'),
+    path('dashboard/members/<int:member_id>/delete/', views.membership_delete, name='membership_delete'),
+
+    
     path('dashboard/books/', views.book_list, name='book_list'),
+    path('dashboard/books/add/', views.book_add, name='book_add'),
+    path('dashboard/books/<int:book_id>/edit/', views.book_edit, name='book_edit'),
+
     path('dashboard/users/', views.user_list, name='user_list'),
+    path('dashboard/users/add/', views.user_add, name='user_add'),
+    path('dashboard/users/<int:user_id>/edit/', views.user_edit, name='user_edit'),
+
 
 # Admin Reports
     path('dashboard/reports/pending-issues/', views.pending_issues, name='pending_issues'),

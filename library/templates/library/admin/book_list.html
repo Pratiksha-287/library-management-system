@@ -1,7 +1,14 @@
 {% extends "library/base.html" %}
 {% block title %}Books{% endblock %}
+
 {% block content %}
 <h2>Books</h2>
+
+<!-- Add Book Button -->
+<div class="mb-3">
+  <a class="btn btn-sm btn-primary" href="{% url 'book_add' %}">Add New Book</a>
+</div>
+
 <table class="table table-sm">
   <thead>
     <tr>
@@ -11,6 +18,7 @@
       <th>Category</th>
       <th>Total Copies</th>
       <th>Available Copies</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -22,9 +30,12 @@
         <td>{{ b.category }}</td>
         <td>{{ b.total_copies }}</td>
         <td>{{ b.available_copies }}</td>
+        <td>
+          <a class="btn btn-sm btn-warning" href="{% url 'book_edit' b.id %}">Edit</a>
+        </td>
       </tr>
     {% empty %}
-      <tr><td colspan="6">No books found.</td></tr>
+      <tr><td colspan="7">No books found.</td></tr>
     {% endfor %}
   </tbody>
 </table>
